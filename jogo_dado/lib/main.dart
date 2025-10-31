@@ -25,6 +25,11 @@ class AplicativoJogodeDados extends StatelessWidget {
   }
 }
 
+
+
+
+
+
 //2. TELA DE CONFIGURAÇÃO
 // Primeira tela do app. Coletar os niomes dos jogadores
 class TelaConfiguracaoJogadores extends StatefulWidget {
@@ -119,6 +124,15 @@ class _EstadoTelaConfuguracaoJogadores
   }
 }
 
+
+
+
+
+
+
+
+
+
 //3. Tela PRINCIPAL DO JOGO
 
 // Aqui eu vou receber os nomes como propriedades
@@ -207,8 +221,7 @@ class _EstadoTelaJogoDeDados extends State<TelaJogodeDados> {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment
-                .center, //é o justify-container: center; do css
+            mainAxisAlignment: MainAxisAlignment.center, //é o justify-container: center; do css
             children: lancamentos.map((valor) {
               //map transforma o numero do dado em um widget e imagem
               return Padding(
@@ -221,10 +234,40 @@ class _EstadoTelaJogoDeDados extends State<TelaJogodeDados> {
                   const Icon(Icons.error, size: 40), //mostra um ícone de erro se a imagem não carregar
                 ),
               );
-            }),
+            }).toList(), //converte o resultado do map em uma lista de widgets
           ),
         ],
       ),
+    );
+  }
+
+  @override
+
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(title: const Text('Jogo de Dados')),
+      body: Column(
+        children: [
+          Row(
+            children: [
+            _construirColunaJogador(widget.nomeJogador1, _lancamentosJogador1),
+            _construirColunaJogador(widget.nomeJogador2, _lancamentosJogador2),
+          ],
+          ),
+          const SizedBox(height: 20),
+          Text(
+            _mensagemResultado,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const Spacer(),//Empurra o botão para a parte de baixo da tela.
+          ElevatedButton(
+            onPressed: _lancarDados,
+            style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 50)),
+            child: const Text('Jogar Dados'),
+          )
+        ],
+      )
     );
   }
 }
